@@ -584,93 +584,140 @@ const Command = React.forwardRef<HTMLDivElement, CommandProps>((props, forwarded
 })
 
 /**
+ * Command menu item (using Link). Becomes active on pointer enter or through keyboard navigation.
+ * Preferably pass a `value`, otherwise the value will be inferred from `children` or
+ * the rendered item's `textContent`.
+ */
+const ItemLink = React.forwardRef<HTMLAnchorElement, ItemProps & { href?: string }>((props, forwardedRef) => {
+  const id = React.useId()
+  const ref = React.useRef<HTMLAnchorElement>(null)
+  const groupContext = React.useContext(GroupContext)
+  const context = useCommand()
+  const propsRef = useAsRef(props)
+  const forceMount = propsRef.current?.forceMount ?? groupContext?.forceMount
+
+  useLayoutEffect(() => {
+    return context.item(id, groupContext?.id)
+  }, [])
+
+  const value = useValue(id, ref, [props.value, props.children, ref])
+
+  const store = useStore()
+  const selected = useCmdk((state) => state.value && state.value === value.current)
+  const render = useCmdk((state) =>
+    forceMount ? true : context.filter() === false ? true : !state.search ? true : state.filtered.items.get(id) > 0,
+  )
+
+  React.useEffect(() => {
+    const element = ref.current
+    if (!element || props.disabled) return
+    element.addEventListener(SELECT_EVENT, onSelect)
+    return () => element.removeEventListener(SELECT_EVENT, onSelect)
+  }, [render, props.onSelect, props.disabled])
+
+  function onSelect() {
+    select()
+    propsRef.current.onSelect?.(value.current)
+  }
+
+  function select() {
+    store.setState('value', value.current, true)
+  }
+
+  if (!render) return null
+
+  const { disabled, value: _, onSelect: __, ...etc } = props
+
+  console.log('Creating a link')
+  return (
+    <Link
+      to={props.href}
+      ref={mergeRefs([ref, forwardedRef])}
+      // {...etc}
+      id={id}
+      cmdk-item=""
+      role="option"
+      aria-disabled={disabled || undefined}
+      aria-selected={selected || undefined}
+      data-disabled={disabled || undefined}
+      data-selected={selected || undefined}
+      onPointerMove={disabled ? undefined : select}
+      onClick={disabled ? undefined : onSelect}
+      className={etc.className}
+      defaultChecked={etc.defaultChecked}
+      defaultValue={etc.defaultValue}
+      suppressContentEditableWarning={etc.suppressContentEditableWarning}
+      suppressHydrationWarning={etc.suppressHydrationWarning}
+      accessKey={etc.accessKey}
+    >
+      {props.children}
+    </Link>
+  )
+})
+
+/**
  * Command menu item. Becomes active on pointer enter or through keyboard navigation.
  * Preferably pass a `value`, otherwise the value will be inferred from `children` or
  * the rendered item's `textContent`.
  */
-const Item = React.forwardRef<HTMLDivElement | HTMLAnchorElement, ItemProps & { href?: string }>(
-  (props, forwardedRef) => {
-    const id = React.useId()
-    const ref = React.useRef<HTMLDivElement | HTMLAnchorElement>(null)
-    const groupContext = React.useContext(GroupContext)
-    const context = useCommand()
-    const propsRef = useAsRef(props)
-    const forceMount = propsRef.current?.forceMount ?? groupContext?.forceMount
+const Item = React.forwardRef<HTMLDivElement, ItemProps>((props, forwardedRef) => {
+  const id = React.useId()
+  const ref = React.useRef<HTMLDivElement>(null)
+  const groupContext = React.useContext(GroupContext)
+  const context = useCommand()
+  const propsRef = useAsRef(props)
+  const forceMount = propsRef.current?.forceMount ?? groupContext?.forceMount
 
-    useLayoutEffect(() => {
-      return context.item(id, groupContext?.id)
-    }, [])
+  useLayoutEffect(() => {
+    return context.item(id, groupContext?.id)
+  }, [])
 
-    const value = useValue(id, ref, [props.value, props.children, ref])
+  const value = useValue(id, ref, [props.value, props.children, ref])
 
-    const store = useStore()
-    const selected = useCmdk((state) => state.value && state.value === value.current)
-    const render = useCmdk((state) =>
-      forceMount ? true : context.filter() === false ? true : !state.search ? true : state.filtered.items.get(id) > 0,
-    )
+  const store = useStore()
+  const selected = useCmdk((state) => state.value && state.value === value.current)
+  const render = useCmdk((state) =>
+    forceMount ? true : context.filter() === false ? true : !state.search ? true : state.filtered.items.get(id) > 0,
+  )
 
-    React.useEffect(() => {
-      const element = ref.current
-      if (!element || props.disabled) return
-      element.addEventListener(SELECT_EVENT, onSelect)
-      return () => element.removeEventListener(SELECT_EVENT, onSelect)
-    }, [render, props.onSelect, props.disabled])
+  React.useEffect(() => {
+    const element = ref.current
+    if (!element || props.disabled) return
+    element.addEventListener(SELECT_EVENT, onSelect)
+    return () => element.removeEventListener(SELECT_EVENT, onSelect)
+  }, [render, props.onSelect, props.disabled])
 
-    function onSelect() {
-      select()
-      propsRef.current.onSelect?.(value.current)
-    }
+  function onSelect() {
+    select()
+    propsRef.current.onSelect?.(value.current)
+  }
 
-    function select() {
-      store.setState('value', value.current, true)
-    }
+  function select() {
+    store.setState('value', value.current, true)
+  }
 
-    if (!render) return null
+  if (!render) return null
 
-    const { disabled, value: _, onSelect: __, ...etc } = props
+  const { disabled, value: _, onSelect: __, ...etc } = props
 
-    if (props.href !== undefined) {
-      console.log('Creating a link')
-      return (
-        //@ts-ignore
-        <Link
-          to={props.href}
-          ref={mergeRefs([ref, forwardedRef])}
-          {...etc}
-          id={id}
-          cmdk-item=""
-          role="option"
-          aria-disabled={disabled || undefined}
-          aria-selected={selected || undefined}
-          data-disabled={disabled || undefined}
-          data-selected={selected || undefined}
-          onPointerMove={disabled ? undefined : select}
-          onClick={disabled ? undefined : onSelect}
-        >
-          {props.children}
-        </Link>
-      )
-    }
-
-    return (
-      <div
-        ref={mergeRefs([ref, forwardedRef])}
-        {...etc}
-        id={id}
-        cmdk-item=""
-        role="option"
-        aria-disabled={disabled || undefined}
-        aria-selected={selected || undefined}
-        data-disabled={disabled || undefined}
-        data-selected={selected || undefined}
-        onPointerMove={disabled ? undefined : select}
-        onClick={disabled ? undefined : onSelect}
-      >
-        {props.children}
-      </div>
-    )
-  },
-)
+  return (
+    <div
+      ref={mergeRefs([ref, forwardedRef])}
+      {...etc}
+      id={id}
+      cmdk-item=""
+      role="option"
+      aria-disabled={disabled || undefined}
+      aria-selected={selected || undefined}
+      data-disabled={disabled || undefined}
+      data-selected={selected || undefined}
+      onPointerMove={disabled ? undefined : select}
+      onClick={disabled ? undefined : onSelect}
+    >
+      {props.children}
+    </div>
+  )
+})
 
 /**
  * Group command menu items together with a heading.
