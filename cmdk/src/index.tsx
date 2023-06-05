@@ -944,6 +944,7 @@ export { pkg as Command }
 export { Command as CommandRoot }
 export { List as CommandList }
 export { Item as CommandItem }
+export { ItemLink as CommandItemLink }
 export { Input as CommandInput }
 export { Group as CommandGroup }
 export { Separator as CommandSeparator }
@@ -1017,8 +1018,8 @@ function mergeRefs<T = any>(refs: Array<React.MutableRefObject<T> | React.Legacy
 /** Run a selector against the store state. */
 function useCmdk<T = any>(selector: (state: State) => T) {
   const store = useStore()
-  const cb = () => selector(store.snapshot())
-  return React.useSyncExternalStore(store.subscribe, cb, cb)
+  const cb = () => selector(store?.snapshot())
+  return React.useSyncExternalStore(store?.subscribe, cb, cb)
 }
 
 function useValue(

@@ -48,6 +48,26 @@ declare const Command: React.ForwardRefExoticComponent<Children & DivProps & {
     loop?: boolean;
 } & React.RefAttributes<HTMLDivElement>>;
 /**
+ * Command menu item (using Link). Becomes active on pointer enter or through keyboard navigation.
+ * Preferably pass a `value`, otherwise the value will be inferred from `children` or
+ * the rendered item's `textContent`.
+ */
+declare const ItemLink: React.ForwardRefExoticComponent<Children & Omit<DivProps, "disabled" | "onSelect" | "value"> & {
+    /** Whether this item is currently disabled. */
+    disabled?: boolean;
+    /** Event handler for when this item is selected, either via click or keyboard selection. */
+    onSelect?: (value: string) => void;
+    /**
+     * A unique value for this item.
+     * If no value is provided, it will be inferred from `children` or the rendered `textContent`. If your `textContent` changes between renders, you _must_ provide a stable, unique `value`.
+     */
+    value?: string;
+    /** Whether this item is forcibly rendered regardless of filtering. */
+    forceMount?: boolean;
+} & {
+    href?: string;
+} & React.RefAttributes<HTMLAnchorElement>>;
+/**
  * Command menu item. Becomes active on pointer enter or through keyboard navigation.
  * Preferably pass a `value`, otherwise the value will be inferred from `children` or
  * the rendered item's `textContent`.
@@ -64,9 +84,7 @@ declare const Item: React.ForwardRefExoticComponent<Children & Omit<DivProps, "d
     value?: string;
     /** Whether this item is forcibly rendered regardless of filtering. */
     forceMount?: boolean;
-} & {
-    href?: string;
-} & React.RefAttributes<HTMLDivElement | HTMLAnchorElement>>;
+} & React.RefAttributes<HTMLDivElement>>;
 declare type Group = {
     id: string;
     forceMount?: boolean;
@@ -210,9 +228,7 @@ declare const pkg: React.ForwardRefExoticComponent<Children & DivProps & {
         value?: string;
         /** Whether this item is forcibly rendered regardless of filtering. */
         forceMount?: boolean;
-    } & {
-        href?: string;
-    } & React.RefAttributes<HTMLDivElement | HTMLAnchorElement>>;
+    } & React.RefAttributes<HTMLDivElement>>;
     Input: React.ForwardRefExoticComponent<Omit<React.InputHTMLAttributes<HTMLInputElement>, "value" | "onChange" | "type"> & {
         /**
          * Optional controlled state for the value of the search input.
@@ -285,4 +301,4 @@ declare const pkg: React.ForwardRefExoticComponent<Children & DivProps & {
 /** Run a selector against the store state. */
 declare function useCmdk<T = any>(selector: (state: State) => T): T;
 
-export { pkg as Command, Dialog as CommandDialog, Empty as CommandEmpty, Group as CommandGroup, Input as CommandInput, Item as CommandItem, List as CommandList, Loading as CommandLoading, Command as CommandRoot, Separator as CommandSeparator, useCmdk as useCommandState };
+export { pkg as Command, Dialog as CommandDialog, Empty as CommandEmpty, Group as CommandGroup, Input as CommandInput, Item as CommandItem, ItemLink as CommandItemLink, List as CommandList, Loading as CommandLoading, Command as CommandRoot, Separator as CommandSeparator, useCmdk as useCommandState };
