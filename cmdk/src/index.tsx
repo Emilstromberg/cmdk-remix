@@ -930,6 +930,7 @@ const Loading = React.forwardRef<HTMLDivElement, LoadingProps>((props, forwarded
 const pkg = Object.assign(Command, {
   List,
   Item,
+  ItemLink,
   Input,
   Group,
   Separator,
