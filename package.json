@@ -13,9 +13,12 @@
   },
   "devDependencies": {
     "@playwright/test": "1.24.1",
+    "prettier": "2.7.1",
     "tsup": "6.2.1",
-    "typescript": "4.6.4",
-    "prettier": "2.7.1"
+    "typescript": "4.6.4"
   },
-  "packageManager": "pnpm@7.9.0"
+  "packageManager": "pnpm@7.9.0",
+  "dependencies": {
+    "@remix-run/react": "^1.16.1"
+  }
 }
