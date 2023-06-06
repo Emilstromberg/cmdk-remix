@@ -100,7 +100,7 @@ declare const CustomGroup: React.ForwardRefExoticComponent<Children & Omit<DivPr
     /** Whether this group is forcibly rendered regardless of filtering. */
     forceMount?: boolean;
 } & {
-    customDivClassName?: string;
+    customchildclassname?: string;
 } & React.RefAttributes<HTMLDivElement>>;
 declare type Group = {
     id: string;
@@ -280,7 +280,7 @@ declare const pkg: React.ForwardRefExoticComponent<Children & DivProps & {
         /** Whether this group is forcibly rendered regardless of filtering. */
         forceMount?: boolean;
     } & {
-        customDivClassName?: string;
+        customchildclassname?: string;
     } & React.RefAttributes<HTMLDivElement>>;
     Group: React.ForwardRefExoticComponent<Children & Omit<DivProps, "value" | "heading"> & {
         /** Optional heading to render for this group. */

@@ -629,7 +629,10 @@ const CustomItem = React.forwardRef<
    */
   React.useEffect(() => {
     console.log(selected)
-    if (selected) ref.current.focus()
+    if (selected) {
+      ref.current.dispatchEvent(new MouseEvent('mouseover'))
+      // const input = ref.current.dispatchEvent(new MouseEvent('mouseover', { view: window }))
+    }
   }, [selected])
 
   function onSelect() {
@@ -772,7 +775,7 @@ const Item = React.forwardRef<HTMLDivElement, ItemProps>((props, forwardedRef) =
  * Group command menu items together with a heading.
  * Grouped items are always shown together.
  */
-const CustomGroup = React.forwardRef<HTMLDivElement, GroupProps & { customDivClassName?: string }>(
+const CustomGroup = React.forwardRef<HTMLDivElement, GroupProps & { customchildclassname?: string }>(
   (props, forwardedRef) => {
     const { heading, children, forceMount, ...etc } = props
     const id = React.useId()
@@ -810,7 +813,7 @@ const CustomGroup = React.forwardRef<HTMLDivElement, GroupProps & { customDivCla
           cmdk-group-items=""
           role="group"
           aria-labelledby={heading ? headingId : undefined}
-          className={props.customDivClassName}
+          className={props.customchildclassname}
         >
           {inner}
         </div>
