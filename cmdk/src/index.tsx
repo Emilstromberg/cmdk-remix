@@ -897,14 +897,15 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>((props, forwardedRe
   const value = useCmdk((state) => state.value)
   const context = useCommand()
 
-  console.log('Store: ', store)
+  console.log('Store Snapshot: ', store.snapshot())
   console.log('Search: ', search)
   console.log('Value: ', value)
   console.log('Context: ', context)
+  console.log('Props: ', props)
 
   const selectedItemId = React.useMemo(() => {
     const item = context.commandRef.current?.querySelector(`${ITEM_SELECTOR}[${VALUE_ATTR}="${value}"]`)
-    console.log(item)
+    console.log('Selected Item: ', item)
     return item?.getAttribute('id')
   }, [value, context.commandRef])
 
