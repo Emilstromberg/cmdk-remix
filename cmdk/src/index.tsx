@@ -641,8 +641,8 @@ const CustomItem = React.forwardRef<
       // console.log('Selected and dispatching mouseover event: ', event)
       // const val = ref.current.dispatchEvent(event)
       // console.log('isPrevented: ', val)
-      ref.current.focus()
-      ref.current.querySelector<HTMLInputElement>('[cmdk-input]').focus()
+      ref.current?.focus()
+      ref.current?.querySelector<HTMLInputElement>('[cmdk-input]')?.focus()
     }
   }, [selected])
 
