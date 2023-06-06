@@ -554,6 +554,8 @@ const Command = React.forwardRef<HTMLDivElement, CommandProps>((props, forwarded
               break
             }
             case 'Enter': {
+              console.log('In the enter...')
+              console.log('Current Event: ', e)
               // Trigger item onSelect
               e.preventDefault()
               const item = getSelectedItem()
