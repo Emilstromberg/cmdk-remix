@@ -596,6 +596,7 @@ const CustomItem = React.forwardRef<
   HTMLAnchorElement,
   ItemProps & {
     href?: string
+    inputRef: React.RefObject<HTMLInputElement>
     CustomAnchorTag?: React.ForwardRefExoticComponent<RemixLinkProps & React.RefAttributes<HTMLAnchorElement>>
   }
 >((props, forwardedRef) => {
@@ -631,17 +632,21 @@ const CustomItem = React.forwardRef<
    */
   React.useEffect(() => {
     if (selected) {
-      const event = new Event('mouseenter', {
-        bubbles: true,
-        cancelable: false,
-      })
+      // const event = new Event('mouseenter', {
+      //   bubbles: true,
+      //   cancelable: false,
+      // })
 
-      console.log('Selected and dispatching mouseover event: ', event)
-      const val = ref.current.dispatchEvent(event)
-      console.log('isPrevented: ', val)
+      // console.log('Selected and dispatching mouseover event: ', event)
+      // const val = ref.current.dispatchEvent(event)
+      // console.log('isPrevented: ', val)
 
-      // ref.current?.focus()
-      // ref.current?.querySelector<HTMLInputElement>('[cmdk-input]')?.focus()
+      console.log('Current Ref: ', ref.current)
+      console.log('Current Input Ref: ', props.inputRef.current)
+      if (ref.current && props.inputRef.current) {
+        ref.current?.focus()
+        props.inputRef.current.focus()
+      }
     }
   }, [selected])
 

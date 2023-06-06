@@ -68,6 +68,7 @@ declare const CustomItem: React.ForwardRefExoticComponent<Children & Omit<DivPro
     forceMount?: boolean;
 } & {
     href?: string;
+    inputRef: React.RefObject<HTMLInputElement>;
     CustomAnchorTag?: React.ForwardRefExoticComponent<RemixLinkProps & React.RefAttributes<HTMLAnchorElement>>;
 } & React.RefAttributes<HTMLAnchorElement>>;
 /**
@@ -247,6 +248,7 @@ declare const pkg: React.ForwardRefExoticComponent<Children & DivProps & {
         forceMount?: boolean;
     } & {
         href?: string;
+        inputRef: React.RefObject<HTMLInputElement>;
         CustomAnchorTag?: React.ForwardRefExoticComponent<RemixLinkProps & React.RefAttributes<HTMLAnchorElement>>;
     } & React.RefAttributes<HTMLAnchorElement>>;
     Item: React.ForwardRefExoticComponent<Children & Omit<DivProps, "disabled" | "onSelect" | "value"> & {
