@@ -628,16 +628,18 @@ const CustomItem = React.forwardRef<
     return () => element.removeEventListener(SELECT_EVENT, onSelect)
   }, [render, props.onSelect, props.disabled])
 
+  const schedule = useScheduleLayoutEffect()
+
   /**
    * Custom listener on select, if selected (aria-selected active) through hover,
    * we want to simulate hover event to get anchor behavior (prefecth etc..)
    */
   React.useEffect(() => {
     if (selected) {
-      console.log('Current Ref: ', ref.current)
+      console.log('Current Ref is Selected: ', ref.current)
+      schedule(1, () => ref.current.focus())
       console.log('Current Input Ref: ', props.inputRef.current)
-      ref.current.focus()
-      props.inputRef.current?.focus()
+      schedule(1, () => props.inputRef.current.focus())
     }
   }, [selected])
 
