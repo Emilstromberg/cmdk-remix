@@ -634,7 +634,7 @@ const CustomItem = React.forwardRef<
       const event = new MouseEvent('mouseenter', {
         view: window,
         bubbles: true,
-        cancelable: true,
+        cancelable: false,
       })
 
       console.log('Selected and dispatching mouseover event: ', event)
@@ -683,6 +683,7 @@ const CustomItem = React.forwardRef<
         suppressContentEditableWarning={etc.suppressContentEditableWarning}
         suppressHydrationWarning={etc.suppressHydrationWarning}
         accessKey={etc.accessKey}
+        onMouseEnter={(e) => console.log(e)}
       >
         {props.children}
       </props.CustomAnchorTag>
