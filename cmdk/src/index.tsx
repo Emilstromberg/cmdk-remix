@@ -621,13 +621,13 @@ const CustomItem = React.forwardRef<
   }, [render, props.onSelect, props.disabled])
 
   function onSelect() {
-    console.log('OnSelect:')
+    console.log('OnSelect: ', value.current)
     select()
     propsRef.current.onSelect?.(value.current)
   }
 
   function select() {
-    console.log('select:')
+    console.log('select: ', value.current)
     store.setState('value', value.current, true)
   }
 
@@ -635,14 +635,12 @@ const CustomItem = React.forwardRef<
 
   const { disabled, value: _, onSelect: __, ...etc } = props
 
-  console.log('Creating a link')
-
   if (props.CustomAnchorTag) {
     return (
       <props.CustomAnchorTag
         to={props.href}
+        prefetch="intent"
         ref={mergeRefs([ref, forwardedRef])}
-        // {...etc}
         id={id}
         cmdk-item=""
         role="option"
