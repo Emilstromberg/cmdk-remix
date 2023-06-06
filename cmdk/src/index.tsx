@@ -1,6 +1,7 @@
 import * as RadixDialog from '@radix-ui/react-dialog'
 import * as React from 'react'
 import { commandScore } from './command-score'
+import { RemixLinkProps } from '@remix-run/react/dist/components'
 
 type Children = { children?: React.ReactNode }
 type DivProps = React.HTMLAttributes<HTMLDivElement>
@@ -582,11 +583,17 @@ const Command = React.forwardRef<HTMLDivElement, CommandProps>((props, forwarded
 })
 
 /**
- * Command menu item (using Link). Becomes active on pointer enter or through keyboard navigation.
+ * Command menu item (using <a>). Becomes active on pointer enter or through keyboard navigation.
  * Preferably pass a `value`, otherwise the value will be inferred from `children` or
  * the rendered item's `textContent`.
  */
-const ItemLink = React.forwardRef<HTMLAnchorElement, ItemProps & { href?: string }>((props, forwardedRef) => {
+const CustomItem = React.forwardRef<
+  HTMLAnchorElement,
+  ItemProps & {
+    href?: string
+    CustomAnchorTag?: React.ForwardRefExoticComponent<RemixLinkProps & React.RefAttributes<HTMLAnchorElement>>
+  }
+>((props, forwardedRef) => {
   const id = React.useId()
   const ref = React.useRef<HTMLAnchorElement>(null)
   const groupContext = React.useContext(GroupContext)
@@ -629,6 +636,34 @@ const ItemLink = React.forwardRef<HTMLAnchorElement, ItemProps & { href?: string
   const { disabled, value: _, onSelect: __, ...etc } = props
 
   console.log('Creating a link')
+
+  if (props.CustomAnchorTag) {
+    return (
+      <props.CustomAnchorTag
+        to={props.href}
+        ref={mergeRefs([ref, forwardedRef])}
+        // {...etc}
+        id={id}
+        cmdk-item=""
+        role="option"
+        aria-disabled={disabled || undefined}
+        aria-selected={selected || undefined}
+        data-disabled={disabled || undefined}
+        data-selected={selected || undefined}
+        onPointerMove={disabled ? undefined : select}
+        onClick={disabled ? undefined : onSelect}
+        className={etc.className}
+        defaultChecked={etc.defaultChecked}
+        defaultValue={etc.defaultValue}
+        suppressContentEditableWarning={etc.suppressContentEditableWarning}
+        suppressHydrationWarning={etc.suppressHydrationWarning}
+        accessKey={etc.accessKey}
+      >
+        {props.children}
+      </props.CustomAnchorTag>
+    )
+  }
+
   return (
     <a
       href={props.href}
@@ -718,6 +753,57 @@ const Item = React.forwardRef<HTMLDivElement, ItemProps>((props, forwardedRef) =
     </div>
   )
 })
+
+/**
+ * Group command menu items together with a heading.
+ * Grouped items are always shown together.
+ */
+const CustomGroup = React.forwardRef<HTMLDivElement, GroupProps & { customDivClassName?: string }>(
+  (props, forwardedRef) => {
+    const { heading, children, forceMount, ...etc } = props
+    const id = React.useId()
+    const ref = React.useRef<HTMLDivElement>(null)
+    const headingRef = React.useRef<HTMLDivElement>(null)
+    const headingId = React.useId()
+    const context = useCommand()
+    const render = useCmdk((state) =>
+      forceMount ? true : context.filter() === false ? true : !state.search ? true : state.filtered.groups.has(id),
+    )
+
+    useLayoutEffect(() => {
+      return context.group(id)
+    }, [])
+
+    useValue(id, ref, [props.value, props.heading, headingRef])
+
+    const contextValue = React.useMemo(() => ({ id, forceMount }), [forceMount])
+    const inner = <GroupContext.Provider value={contextValue}>{children}</GroupContext.Provider>
+
+    return (
+      <div
+        ref={mergeRefs([ref, forwardedRef])}
+        {...etc}
+        cmdk-group=""
+        role="presentation"
+        hidden={render ? undefined : true}
+      >
+        {heading && (
+          <div ref={headingRef} cmdk-group-heading="" aria-hidden id={headingId}>
+            {heading}
+          </div>
+        )}
+        <div
+          cmdk-group-items=""
+          role="group"
+          aria-labelledby={heading ? headingId : undefined}
+          className={props.customDivClassName}
+        >
+          {inner}
+        </div>
+      </div>
+    )
+  },
+)
 
 /**
  * Group command menu items together with a heading.
@@ -929,9 +1015,10 @@ const Loading = React.forwardRef<HTMLDivElement, LoadingProps>((props, forwarded
 
 const pkg = Object.assign(Command, {
   List,
+  CustomItem,
   Item,
-  ItemLink,
   Input,
+  CustomGroup,
   Group,
   Separator,
   Dialog,
@@ -944,9 +1031,10 @@ export { pkg as Command }
 
 export { Command as CommandRoot }
 export { List as CommandList }
+export { CustomItem as CommandItemCustom }
 export { Item as CommandItem }
-export { ItemLink as CommandItemLink }
 export { Input as CommandInput }
+export { CustomGroup as CommandGroupCustom }
 export { Group as CommandGroup }
 export { Separator as CommandSeparator }
 export { Dialog as CommandDialog }
