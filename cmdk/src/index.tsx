@@ -631,18 +631,17 @@ const CustomItem = React.forwardRef<
    */
   React.useEffect(() => {
     if (selected) {
-      // const event = new MouseEvent('mouseenter', {
-      //   altKey: false,
-      //   bubbles: true,
-      //   cancelable: true,
-      //   view: window,
-      // })
+      const event = new Event('mouseenter', {
+        bubbles: true,
+        cancelable: false,
+      })
 
-      // console.log('Selected and dispatching mouseover event: ', event)
-      // const val = ref.current.dispatchEvent(event)
-      // console.log('isPrevented: ', val)
-      ref.current?.focus()
-      ref.current?.querySelector<HTMLInputElement>('[cmdk-input]')?.focus()
+      console.log('Selected and dispatching mouseover event: ', event)
+      const val = ref.current.dispatchEvent(event)
+      console.log('isPrevented: ', val)
+
+      // ref.current?.focus()
+      // ref.current?.querySelector<HTMLInputElement>('[cmdk-input]')?.focus()
     }
   }, [selected])
 
