@@ -626,6 +626,7 @@ const CustomItem = React.forwardRef<
     console.log('OnSelect: ', value.current)
     select()
     propsRef.current.onSelect?.(value.current)
+    ref.current.click()
   }
 
   function select() {
