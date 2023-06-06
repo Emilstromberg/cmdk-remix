@@ -614,11 +614,13 @@ const ItemLink = React.forwardRef<HTMLAnchorElement, ItemProps & { href?: string
   }, [render, props.onSelect, props.disabled])
 
   function onSelect() {
+    console.log('OnSelect:')
     select()
     propsRef.current.onSelect?.(value.current)
   }
 
   function select() {
+    console.log('select:')
     store.setState('value', value.current, true)
   }
 
