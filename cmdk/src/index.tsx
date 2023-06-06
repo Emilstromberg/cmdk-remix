@@ -644,8 +644,8 @@ const CustomItem = React.forwardRef<
       console.log('Current Ref: ', ref.current)
       console.log('Current Input Ref: ', props.inputRef.current)
       if (ref.current && props.inputRef.current) {
-        // ref.current?.focus()
-        // props.inputRef.current.focus()
+        ref.current?.focus()
+        props.inputRef.current.focus()
       }
     }
   }, [selected])
@@ -906,10 +906,11 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>((props, forwardedRe
   const value = useCmdk((state) => state.value)
   const context = useCommand()
 
+  const item = context.commandRef.current?.querySelector(`${ITEM_SELECTOR}[${VALUE_ATTR}="${value}"]`)
+
   const selectedItemId = React.useMemo(() => {
-    const item = context.commandRef.current?.querySelector(`${ITEM_SELECTOR}[${VALUE_ATTR}="${value}"]`)
     return item?.getAttribute('id')
-  }, [value, context.commandRef])
+  }, [item])
 
   React.useEffect(() => {
     if (props.value != null) {
