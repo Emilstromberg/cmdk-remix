@@ -628,10 +628,16 @@ const CustomItem = React.forwardRef<
    * we want to simulate hover event to get anchor behavior (prefecth etc..)
    */
   React.useEffect(() => {
-    console.log(selected)
     if (selected) {
-      ref.current.dispatchEvent(new MouseEvent('mouseover'))
-      // const input = ref.current.dispatchEvent(new MouseEvent('mouseover', { view: window }))
+      const event = new MouseEvent('mouseenter', {
+        view: window,
+        bubbles: true,
+        cancelable: true,
+      })
+
+      console.log('Selected and dispatching mouseover event: ', event)
+
+      ref.current.dispatchEvent(event)
     }
   }, [selected])
 
