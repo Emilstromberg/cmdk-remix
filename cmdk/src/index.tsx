@@ -165,6 +165,8 @@ const Command = React.forwardRef<HTMLDivElement, CommandProps>((props, forwarded
   const propsRef = useAsRef(props)
   const { label, children, value, onValueChange, filter, shouldFilter, ...etc } = props
 
+  console.log('AllItems: ', allItems)
+
   const listId = React.useId()
   const labelId = React.useId()
   const inputId = React.useId()
@@ -632,21 +634,10 @@ const CustomItem = React.forwardRef<
    */
   React.useEffect(() => {
     if (selected) {
-      // const event = new Event('mouseenter', {
-      //   bubbles: true,
-      //   cancelable: false,
-      // })
-
-      // console.log('Selected and dispatching mouseover event: ', event)
-      // const val = ref.current.dispatchEvent(event)
-      // console.log('isPrevented: ', val)
-
       console.log('Current Ref: ', ref.current)
       console.log('Current Input Ref: ', props.inputRef.current)
-      if (ref.current && props.inputRef.current) {
-        ref.current?.focus()
-        props.inputRef.current.focus()
-      }
+      ref.current.focus()
+      props.inputRef.current?.focus()
     }
   }, [selected])
 
