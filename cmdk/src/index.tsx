@@ -906,11 +906,16 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>((props, forwardedRe
   const value = useCmdk((state) => state.value)
   const context = useCommand()
 
-  const item = context.commandRef.current?.querySelector(`${ITEM_SELECTOR}[${VALUE_ATTR}="${value}"]`)
+  console.log('Store: ', store)
+  console.log('Search: ', search)
+  console.log('Value: ', value)
+  console.log('Context: ', context)
 
   const selectedItemId = React.useMemo(() => {
+    const item = context.commandRef.current?.querySelector(`${ITEM_SELECTOR}[${VALUE_ATTR}="${value}"]`)
+    console.log(item)
     return item?.getAttribute('id')
-  }, [item])
+  }, [value, context.commandRef])
 
   React.useEffect(() => {
     if (props.value != null) {
