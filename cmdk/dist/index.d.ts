@@ -49,7 +49,8 @@ declare const Command: React.ForwardRefExoticComponent<Children & DivProps & {
     loop?: boolean;
 } & React.RefAttributes<HTMLDivElement>>;
 /**
- * Command menu item (using <a>). Becomes active on pointer enter or through keyboard navigation.
+ * Command menu item (a passed in anchorComponent (expecting Remix Link). Becomes active on pointer enter or
+ * through keyboard navigation.
  * Preferably pass a `value`, otherwise the value will be inferred from `children` or
  * the rendered item's `textContent`.
  */

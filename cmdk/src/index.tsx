@@ -585,7 +585,8 @@ const Command = React.forwardRef<HTMLDivElement, CommandProps>((props, forwarded
 })
 
 /**
- * Command menu item (using <a>). Becomes active on pointer enter or through keyboard navigation.
+ * Command menu item (a passed in anchorComponent (expecting Remix Link). Becomes active on pointer enter or
+ * through keyboard navigation.
  * Preferably pass a `value`, otherwise the value will be inferred from `children` or
  * the rendered item's `textContent`.
  */
@@ -622,15 +623,27 @@ const CustomItem = React.forwardRef<
     return () => element.removeEventListener(SELECT_EVENT, onSelect)
   }, [render, props.onSelect, props.disabled])
 
+  /**
+   * Custom listener on select, if selected (aria-selected active) through hover,
+   * we want to simulate hover event to get anchor behavior (prefecth etc..)
+   */
+  React.useEffect(() => {
+    console.log(selected)
+    if (selected) ref.current.focus()
+  }, [selected])
+
   function onSelect() {
-    console.log('OnSelect: ', value.current)
     select()
     propsRef.current.onSelect?.(value.current)
+
+    /**
+     *  If it is selected (through enter click triggering the aria-selected active),
+     *  we simulate click event to get anchor behavior
+     */
     ref.current.click()
   }
 
   function select() {
-    console.log('select: ', value.current)
     store.setState('value', value.current, true)
   }
 
