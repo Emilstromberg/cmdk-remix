@@ -644,8 +644,8 @@ const CustomItem = React.forwardRef<
       console.log('Current Ref: ', ref.current)
       console.log('Current Input Ref: ', props.inputRef.current)
       if (ref.current && props.inputRef.current) {
-        ref.current?.focus()
-        props.inputRef.current.focus()
+        // ref.current?.focus()
+        // props.inputRef.current.focus()
       }
     }
   }, [selected])
@@ -690,7 +690,6 @@ const CustomItem = React.forwardRef<
         suppressContentEditableWarning={etc.suppressContentEditableWarning}
         suppressHydrationWarning={etc.suppressHydrationWarning}
         accessKey={etc.accessKey}
-        onMouseEnter={(e) => console.log(e)}
       >
         {props.children}
       </props.CustomAnchorTag>
