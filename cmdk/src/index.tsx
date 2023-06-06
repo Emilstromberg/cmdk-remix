@@ -3,6 +3,8 @@ import * as React from 'react'
 import { commandScore } from './command-score'
 import { RemixLinkProps } from '@remix-run/react/dist/components'
 
+import { Link } from '@remix-run/react'
+
 type Children = { children?: React.ReactNode }
 type DivProps = React.HTMLAttributes<HTMLDivElement>
 
@@ -636,8 +638,8 @@ const CustomItem = React.forwardRef<
       })
 
       console.log('Selected and dispatching mouseover event: ', event)
-
-      ref.current.dispatchEvent(event)
+      const val = ref.current.dispatchEvent(event)
+      console.log('isPrevented: ', val)
     }
   }, [selected])
 
