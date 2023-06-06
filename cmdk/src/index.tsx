@@ -2,8 +2,6 @@ import * as RadixDialog from '@radix-ui/react-dialog'
 import * as React from 'react'
 import { commandScore } from './command-score'
 
-import { Link } from '@remix-run/react'
-
 type Children = { children?: React.ReactNode }
 type DivProps = React.HTMLAttributes<HTMLDivElement>
 
@@ -630,8 +628,8 @@ const ItemLink = React.forwardRef<HTMLAnchorElement, ItemProps & { href?: string
 
   console.log('Creating a link')
   return (
-    <Link
-      to={props.href}
+    <a
+      href={props.href}
       ref={mergeRefs([ref, forwardedRef])}
       // {...etc}
       id={id}
@@ -651,7 +649,7 @@ const ItemLink = React.forwardRef<HTMLAnchorElement, ItemProps & { href?: string
       accessKey={etc.accessKey}
     >
       {props.children}
-    </Link>
+    </a>
   )
 })
 

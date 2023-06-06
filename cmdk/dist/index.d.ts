@@ -229,6 +229,21 @@ declare const pkg: React.ForwardRefExoticComponent<Children & DivProps & {
         /** Whether this item is forcibly rendered regardless of filtering. */
         forceMount?: boolean;
     } & React.RefAttributes<HTMLDivElement>>;
+    ItemLink: React.ForwardRefExoticComponent<Children & Omit<DivProps, "disabled" | "onSelect" | "value"> & {
+        /** Whether this item is currently disabled. */
+        disabled?: boolean;
+        /** Event handler for when this item is selected, either via click or keyboard selection. */
+        onSelect?: (value: string) => void;
+        /**
+         * A unique value for this item.
+         * If no value is provided, it will be inferred from `children` or the rendered `textContent`. If your `textContent` changes between renders, you _must_ provide a stable, unique `value`.
+         */
+        value?: string;
+        /** Whether this item is forcibly rendered regardless of filtering. */
+        forceMount?: boolean;
+    } & {
+        href?: string;
+    } & React.RefAttributes<HTMLAnchorElement>>;
     Input: React.ForwardRefExoticComponent<Omit<React.InputHTMLAttributes<HTMLInputElement>, "value" | "onChange" | "type"> & {
         /**
          * Optional controlled state for the value of the search input.
