@@ -1,5 +1,6 @@
 import * as RadixDialog from '@radix-ui/react-dialog';
 import * as React from 'react';
+import { RemixLinkProps } from '@remix-run/react/dist/components';
 
 declare type Children = {
     children?: React.ReactNode;
@@ -48,11 +49,11 @@ declare const Command: React.ForwardRefExoticComponent<Children & DivProps & {
     loop?: boolean;
 } & React.RefAttributes<HTMLDivElement>>;
 /**
- * Command menu item (using Link). Becomes active on pointer enter or through keyboard navigation.
+ * Command menu item (using <a>). Becomes active on pointer enter or through keyboard navigation.
  * Preferably pass a `value`, otherwise the value will be inferred from `children` or
  * the rendered item's `textContent`.
  */
-declare const ItemLink: React.ForwardRefExoticComponent<Children & Omit<DivProps, "disabled" | "onSelect" | "value"> & {
+declare const CustomItem: React.ForwardRefExoticComponent<Children & Omit<DivProps, "disabled" | "onSelect" | "value"> & {
     /** Whether this item is currently disabled. */
     disabled?: boolean;
     /** Event handler for when this item is selected, either via click or keyboard selection. */
@@ -66,6 +67,7 @@ declare const ItemLink: React.ForwardRefExoticComponent<Children & Omit<DivProps
     forceMount?: boolean;
 } & {
     href?: string;
+    CustomAnchorTag?: React.ForwardRefExoticComponent<RemixLinkProps & React.RefAttributes<HTMLAnchorElement>>;
 } & React.RefAttributes<HTMLAnchorElement>>;
 /**
  * Command menu item. Becomes active on pointer enter or through keyboard navigation.
@@ -84,6 +86,20 @@ declare const Item: React.ForwardRefExoticComponent<Children & Omit<DivProps, "d
     value?: string;
     /** Whether this item is forcibly rendered regardless of filtering. */
     forceMount?: boolean;
+} & React.RefAttributes<HTMLDivElement>>;
+/**
+ * Group command menu items together with a heading.
+ * Grouped items are always shown together.
+ */
+declare const CustomGroup: React.ForwardRefExoticComponent<Children & Omit<DivProps, "value" | "heading"> & {
+    /** Optional heading to render for this group. */
+    heading?: React.ReactNode;
+    /** If no heading is provided, you must provide a value that is unique for this group. */
+    value?: string;
+    /** Whether this group is forcibly rendered regardless of filtering. */
+    forceMount?: boolean;
+} & {
+    customDivClassName?: string;
 } & React.RefAttributes<HTMLDivElement>>;
 declare type Group = {
     id: string;
@@ -216,20 +232,7 @@ declare const pkg: React.ForwardRefExoticComponent<Children & DivProps & {
     loop?: boolean;
 } & React.RefAttributes<HTMLDivElement>> & {
     List: React.ForwardRefExoticComponent<Children & DivProps & React.RefAttributes<HTMLDivElement>>;
-    Item: React.ForwardRefExoticComponent<Children & Omit<DivProps, "disabled" | "onSelect" | "value"> & {
-        /** Whether this item is currently disabled. */
-        disabled?: boolean;
-        /** Event handler for when this item is selected, either via click or keyboard selection. */
-        onSelect?: (value: string) => void;
-        /**
-         * A unique value for this item.
-         * If no value is provided, it will be inferred from `children` or the rendered `textContent`. If your `textContent` changes between renders, you _must_ provide a stable, unique `value`.
-         */
-        value?: string;
-        /** Whether this item is forcibly rendered regardless of filtering. */
-        forceMount?: boolean;
-    } & React.RefAttributes<HTMLDivElement>>;
-    ItemLink: React.ForwardRefExoticComponent<Children & Omit<DivProps, "disabled" | "onSelect" | "value"> & {
+    CustomItem: React.ForwardRefExoticComponent<Children & Omit<DivProps, "disabled" | "onSelect" | "value"> & {
         /** Whether this item is currently disabled. */
         disabled?: boolean;
         /** Event handler for when this item is selected, either via click or keyboard selection. */
@@ -243,7 +246,21 @@ declare const pkg: React.ForwardRefExoticComponent<Children & DivProps & {
         forceMount?: boolean;
     } & {
         href?: string;
+        CustomAnchorTag?: React.ForwardRefExoticComponent<RemixLinkProps & React.RefAttributes<HTMLAnchorElement>>;
     } & React.RefAttributes<HTMLAnchorElement>>;
+    Item: React.ForwardRefExoticComponent<Children & Omit<DivProps, "disabled" | "onSelect" | "value"> & {
+        /** Whether this item is currently disabled. */
+        disabled?: boolean;
+        /** Event handler for when this item is selected, either via click or keyboard selection. */
+        onSelect?: (value: string) => void;
+        /**
+         * A unique value for this item.
+         * If no value is provided, it will be inferred from `children` or the rendered `textContent`. If your `textContent` changes between renders, you _must_ provide a stable, unique `value`.
+         */
+        value?: string;
+        /** Whether this item is forcibly rendered regardless of filtering. */
+        forceMount?: boolean;
+    } & React.RefAttributes<HTMLDivElement>>;
     Input: React.ForwardRefExoticComponent<Omit<React.InputHTMLAttributes<HTMLInputElement>, "value" | "onChange" | "type"> & {
         /**
          * Optional controlled state for the value of the search input.
@@ -254,6 +271,16 @@ declare const pkg: React.ForwardRefExoticComponent<Children & DivProps & {
          */
         onValueChange?: (search: string) => void;
     } & React.RefAttributes<HTMLInputElement>>;
+    CustomGroup: React.ForwardRefExoticComponent<Children & Omit<DivProps, "value" | "heading"> & {
+        /** Optional heading to render for this group. */
+        heading?: React.ReactNode;
+        /** If no heading is provided, you must provide a value that is unique for this group. */
+        value?: string;
+        /** Whether this group is forcibly rendered regardless of filtering. */
+        forceMount?: boolean;
+    } & {
+        customDivClassName?: string;
+    } & React.RefAttributes<HTMLDivElement>>;
     Group: React.ForwardRefExoticComponent<Children & Omit<DivProps, "value" | "heading"> & {
         /** Optional heading to render for this group. */
         heading?: React.ReactNode;
@@ -316,4 +343,4 @@ declare const pkg: React.ForwardRefExoticComponent<Children & DivProps & {
 /** Run a selector against the store state. */
 declare function useCmdk<T = any>(selector: (state: State) => T): T;
 
-export { pkg as Command, Dialog as CommandDialog, Empty as CommandEmpty, Group as CommandGroup, Input as CommandInput, Item as CommandItem, ItemLink as CommandItemLink, List as CommandList, Loading as CommandLoading, Command as CommandRoot, Separator as CommandSeparator, useCmdk as useCommandState };
+export { pkg as Command, Dialog as CommandDialog, Empty as CommandEmpty, Group as CommandGroup, CustomGroup as CommandGroupCustom, Input as CommandInput, Item as CommandItem, CustomItem as CommandItemCustom, List as CommandList, Loading as CommandLoading, Command as CommandRoot, Separator as CommandSeparator, useCmdk as useCommandState };
