@@ -910,13 +910,13 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>((props, forwardedRe
 
   console.log('Store Snapshot: ', store.snapshot())
   console.log('Search: ', search)
-  console.log('Value: ', value)
   console.log('Context: ', context)
   console.log('Props: ', props)
 
   const selectedItemId = React.useMemo(() => {
+    // console.log(`Selection (selectedItemId) commencing, commandRef: ${context.commandRef.current} `)
     const item = context.commandRef.current?.querySelector(`${ITEM_SELECTOR}[${VALUE_ATTR}="${value}"]`)
-    console.log('Selected Item: ', item)
+    // console.log('Selected Item: ', item)
     return item?.getAttribute('id')
   }, [value, context.commandRef])
 
@@ -924,9 +924,9 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>((props, forwardedRe
   //? If for example there is a async event handling outside this environment,
   //? triggered by props.value, but not yet rendered when effect fires.
   React.useEffect(() => {
-    console.log('Props Value: ', props.value, ' loading: ', loading)
+    // console.log('Props Value: ', props.value, ' loading: ', loading)
     if (props.value != null) {
-      console.log('State Search commencing...')
+      // console.log('State Search commencing...')
       store.setState('search', props.value)
     }
   }, [props.value, loading])
