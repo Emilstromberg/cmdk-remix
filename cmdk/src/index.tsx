@@ -646,10 +646,16 @@ const CustomItem = React.forwardRef<
     return () => element.removeEventListener(SELECT_EVENT, onSelect)
   }, [render, props.onSelect, props.disabled])
 
-  const schedule = useScheduleLayoutEffect()
-
   //* We could add a listener, that tells us how long a Element have been selected, and
   //* if more than a set limit (e.g. 300ms), we trigger rendering of preload element.
+  const [selectedAt, setSelectedAt] = React.useState<number>()
+  const thresholdSelected = 300
+
+  React.useEffect(() => {
+    if (selected) {
+      setSelectedAt(Date.now())
+    }
+  }, [selected])
 
   function onSelect() {
     select()
@@ -693,7 +699,9 @@ const CustomItem = React.forwardRef<
         suppressContentEditableWarning={etc.suppressContentEditableWarning}
       >
         {props.children}
-        {selected ? <>{CustomPrefetchElement({ page: props.href })}</> : null}
+        {selected && selectedAt + thresholdSelected < Date.now() ? (
+          <>{CustomPrefetchElement({ page: props.href })}</>
+        ) : null}
       </CustomAnchorTag>
     )
   }
