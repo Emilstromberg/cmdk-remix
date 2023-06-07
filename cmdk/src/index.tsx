@@ -617,7 +617,7 @@ const CustomItem = React.forwardRef<
     href?: string
     inputRef: React.RefObject<HTMLInputElement>
     CustomAnchorTag?: React.ForwardRefExoticComponent<RemixLinkProps & React.RefAttributes<HTMLAnchorElement>>
-    CustomPrefetchElement: Element
+    CustomPrefetchElement: ({ page, ...dataLinkProps }: PrefetchPageDescriptor) => Element | null
   }
 >((props, forwardedRef) => {
   const id = React.useId()
@@ -648,23 +648,8 @@ const CustomItem = React.forwardRef<
 
   const schedule = useScheduleLayoutEffect()
 
-  /**
-   * Custom listener on select, if selected (aria-selected active) through hover,
-   * we want to simulate hover event to get anchor behavior (prefecth etc..)
-   */
-  React.useEffect(() => {
-    if (selected) {
-      console.log('Current Ref is Selected: ', ref.current)
-      // schedule(1, () => ref.current.focus())
-      console.log('Current Input Ref: ', props.inputRef.current)
-      const event1 = new MouseEvent('mouseenter')
-      const event2 = new MouseEvent('mouseleave')
-      console.log(event1)
-      console.log(event2)
-      schedule(0, () => ref.current.dispatchEvent(event1))
-      schedule(5, () => ref.current.dispatchEvent(event2))
-    }
-  }, [selected])
+  //* We could add a listener, that tells us how long a Element have been selected, and
+  //* if more than a set limit (e.g. 300ms), we trigger rendering of preload element.
 
   function onSelect() {
     select()
@@ -683,11 +668,11 @@ const CustomItem = React.forwardRef<
 
   if (!render) return null
 
-  const { disabled, value: _, onSelect: __, ...etc } = props
+  const { disabled, value: _, onSelect: __, CustomAnchorTag, CustomPrefetchElement, ...etc } = props
 
   if (props.CustomAnchorTag) {
     return (
-      <props.CustomAnchorTag
+      <CustomAnchorTag
         id={id}
         to={props.href}
         ref={mergeRefs([ref, forwardedRef])}
@@ -708,8 +693,8 @@ const CustomItem = React.forwardRef<
         suppressContentEditableWarning={etc.suppressContentEditableWarning}
       >
         {props.children}
-        {selected ? <>{props.CustomPrefetchElement}</> : null}
-      </props.CustomAnchorTag>
+        {selected ? <>{CustomPrefetchElement({ page: props.href })}</> : null}
+      </CustomAnchorTag>
     )
   }
 
