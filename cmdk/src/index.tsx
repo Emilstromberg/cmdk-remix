@@ -648,8 +648,8 @@ const CustomItem = React.forwardRef<
 
   //* We could add a listener, that tells us how long a Element have been selected, and
   //* if more than a set limit (e.g. 300ms), we trigger rendering of preload element.
-  const [selectedAt, setSelectedAt] = React.useState<number>()
-  const thresholdSelected = 300
+  const [selectedAt, setSelectedAt] = React.useState<number>(null)
+  const THRESHOLD_SELECTED_INTENT = 300
 
   React.useEffect(() => {
     if (selected) {
@@ -699,9 +699,9 @@ const CustomItem = React.forwardRef<
         suppressContentEditableWarning={etc.suppressContentEditableWarning}
       >
         {props.children}
-        {selected && selectedAt + thresholdSelected < Date.now() ? (
-          <>{CustomPrefetchElement({ page: props.href })}</>
-        ) : null}
+        {selected && selectedAt + THRESHOLD_SELECTED_INTENT < Date.now()
+          ? CustomPrefetchElement({ page: props.href })
+          : null}
       </CustomAnchorTag>
     )
   }
