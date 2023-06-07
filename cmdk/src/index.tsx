@@ -198,6 +198,7 @@ const Command = React.forwardRef<HTMLDivElement, CommandProps>((props, forwarded
         return state.current
       },
       setState: (key, value, opts) => {
+        console.log(`State Update, key: ${key}, value: ${value}, if statement: ${Object.is(state.current[key], value)}`)
         if (Object.is(state.current[key], value)) return
         state.current[key] = value
 
