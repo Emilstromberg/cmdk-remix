@@ -140,7 +140,9 @@ declare const Input: React.ForwardRefExoticComponent<Omit<React.InputHTMLAttribu
      * Event handler called when the search value changes.
      */
     onValueChange?: (search: string) => void;
-} & {
+    /**
+     * Custom prop, notifying our effects if there was an outside event.
+     */
     loading: boolean;
 } & React.RefAttributes<HTMLInputElement>>;
 /**
@@ -275,7 +277,9 @@ declare const pkg: React.ForwardRefExoticComponent<Children & DivProps & {
          * Event handler called when the search value changes.
          */
         onValueChange?: (search: string) => void;
-    } & {
+        /**
+         * Custom prop, notifying our effects if there was an outside event.
+         */
         loading: boolean;
     } & React.RefAttributes<HTMLInputElement>>;
     CustomGroup: React.ForwardRefExoticComponent<Children & Omit<DivProps, "value" | "heading"> & {

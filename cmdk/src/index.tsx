@@ -59,6 +59,11 @@ type InputProps = Omit<React.InputHTMLAttributes<HTMLInputElement>, 'value' | 'o
    * Event handler called when the search value changes.
    */
   onValueChange?: (search: string) => void
+
+  /**
+   * Custom prop, notifying our effects if there was an outside event.
+   */
+  loading: boolean
 }
 type CommandProps = Children &
   DivProps & {
@@ -894,7 +899,7 @@ const Separator = React.forwardRef<HTMLDivElement, SeparatorProps>((props, forwa
  * Command menu input.
  * All props are forwarded to the underyling `input` element.
  */
-const Input = React.forwardRef<HTMLInputElement, InputProps & { loading: boolean }>((props, forwardedRef) => {
+const Input = React.forwardRef<HTMLInputElement, InputProps>((props, forwardedRef) => {
   const { onValueChange, ...etc } = props
   const isControlled = props.value != null
   const store = useStore()
