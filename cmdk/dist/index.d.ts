@@ -75,7 +75,7 @@ declare const CustomItem: React.ForwardRefExoticComponent<Children & Omit<DivPro
     href?: string;
     inputRef: React.RefObject<HTMLInputElement>;
     CustomAnchorTag?: React.ForwardRefExoticComponent<RemixLinkProps & React.RefAttributes<HTMLAnchorElement>>;
-    CustomPrefetchElement: JSX.Element | null;
+    CustomPrefetchElement: Element;
 } & React.RefAttributes<HTMLAnchorElement>>;
 /**
  * Command menu item. Becomes active on pointer enter or through keyboard navigation.
@@ -270,7 +270,7 @@ declare const pkg: React.ForwardRefExoticComponent<Children & DivProps & {
         href?: string;
         inputRef: React.RefObject<HTMLInputElement>;
         CustomAnchorTag?: React.ForwardRefExoticComponent<RemixLinkProps & React.RefAttributes<HTMLAnchorElement>>;
-        CustomPrefetchElement: JSX.Element | null;
+        CustomPrefetchElement: Element;
     } & React.RefAttributes<HTMLAnchorElement>>;
     Item: React.ForwardRefExoticComponent<Children & Omit<DivProps, "disabled" | "onSelect" | "value"> & {
         /** Whether this item is currently disabled. */
