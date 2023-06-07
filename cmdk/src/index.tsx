@@ -932,14 +932,14 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>((props, forwardedRe
   //? If for example there is a async event handling outside this environment,
   //? triggered by props.value, but not yet rendered when effect fires.
   React.useEffect(() => {
-    // console.log('Props Value: ', props.value, ' loading: ', loading)
+    console.log('Props Value: ', props.value, ' loading: ', loading)
     if (props.value != null) {
-      // console.log('State Search commencing...')
+      console.log('State Search commencing...')
       store.setState('search', props.value)
     }
     //? We listen to the underlying list, if this has been updated async values have been
     //? fetched, ready to update focused value.
-  }, [props.value, store.snapshot().filtered.items])
+  }, [props.value, loading])
 
   return (
     <input
