@@ -198,7 +198,7 @@ const Command = React.forwardRef<HTMLDivElement, CommandProps>((props, forwarded
         return state.current
       },
       setState: (key, value, opts) => {
-        console.log(`State Update, key: ${key}, value: ${value}, if statement: ${Object.is(state.current[key], value)}`)
+        // console.log(`State Update, key: ${key}, value: ${value}, if statement: ${Object.is(state.current[key], value)}`)
         if (Object.is(state.current[key], value)) return
         state.current[key] = value
 
@@ -376,6 +376,7 @@ const Command = React.forwardRef<HTMLDivElement, CommandProps>((props, forwarded
   function selectFirstItem() {
     const item = getValidItems().find((item) => !item.ariaDisabled)
     const value = item?.getAttribute(VALUE_ATTR)
+    console.log(`Selecting First Item: ${item}, value: ${value}`)
     store.setState('value', value || undefined)
   }
 
@@ -564,8 +565,8 @@ const Command = React.forwardRef<HTMLDivElement, CommandProps>((props, forwarded
               break
             }
             case 'Enter': {
-              console.log('In the enter...')
-              console.log('Current Event: ', e)
+              // console.log('In the enter...')
+              // console.log('Current Event: ', e)
               // Trigger item onSelect
               e.preventDefault()
               const item = getSelectedItem()
@@ -645,10 +646,11 @@ const CustomItem = React.forwardRef<
       console.log('Current Ref is Selected: ', ref.current)
       // schedule(1, () => ref.current.focus())
       console.log('Current Input Ref: ', props.inputRef.current)
-      schedule(0, () => ref.current.dispatchEvent(new Event('mouseenter')))
-      schedule(5, () => ref.current.dispatchEvent(new Event('mouseleave')))
+      const event1 = new Event('mouseenter')
+      const event2 = new Event('mouseleave')
 
-      // schedule(1, () => props.inputRef.current.focus())
+      schedule(0, () => ref.current.dispatchEvent(event1))
+      schedule(5, () => ref.current.dispatchEvent(event2))
     }
   }, [selected])
 
