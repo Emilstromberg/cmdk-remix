@@ -617,7 +617,7 @@ const CustomItem = React.forwardRef<
     href?: string
     inputRef: React.RefObject<HTMLInputElement>
     CustomAnchorTag?: React.ForwardRefExoticComponent<RemixLinkProps & React.RefAttributes<HTMLAnchorElement>>
-    CustomPrefetchElement: Element
+    CustomPrefetchElement: React.ReactElement<PrefetchPageDescriptor>
   }
 >((props, forwardedRef) => {
   const id = React.useId()
