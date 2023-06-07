@@ -1,7 +1,7 @@
 import * as RadixDialog from '@radix-ui/react-dialog'
 import * as React from 'react'
 import { commandScore } from './command-score'
-import { RemixLinkProps } from '@remix-run/react/dist/components'
+import { PrefetchPageLinks, RemixLinkProps } from '@remix-run/react/dist/components'
 
 import { Link } from '@remix-run/react'
 
@@ -688,26 +688,27 @@ const CustomItem = React.forwardRef<
   if (props.CustomAnchorTag) {
     return (
       <props.CustomAnchorTag
-        to={props.href}
-        prefetch="intent"
-        ref={mergeRefs([ref, forwardedRef])}
         id={id}
-        cmdk-item=""
+        to={props.href}
+        ref={mergeRefs([ref, forwardedRef])}
         role="option"
+        onClick={disabled ? undefined : onSelect}
+        prefetch="none" // Handled through custom selective rendering behaviour down below, to support keyboard hover.
+        accessKey={etc.accessKey}
+        className={etc.className}
+        cmdk-item=""
+        defaultValue={etc.defaultValue}
         aria-disabled={disabled || undefined}
         aria-selected={selected || undefined}
         data-disabled={disabled || undefined}
         data-selected={selected || undefined}
         onPointerMove={disabled ? undefined : select}
-        onClick={disabled ? undefined : onSelect}
-        className={etc.className}
         defaultChecked={etc.defaultChecked}
-        defaultValue={etc.defaultValue}
-        suppressContentEditableWarning={etc.suppressContentEditableWarning}
         suppressHydrationWarning={etc.suppressHydrationWarning}
-        accessKey={etc.accessKey}
+        suppressContentEditableWarning={etc.suppressContentEditableWarning}
       >
         {props.children}
+        {selected ? <PrefetchPageLinks page={props.href} /> : null}
       </props.CustomAnchorTag>
     )
   }
@@ -938,7 +939,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>((props, forwardedRe
   //? If for example there is a async event handling outside this environment,
   //? triggered by props.value, but not yet rendered when effect fires.
   React.useEffect(() => {
-    console.log('Props Value: ', props.value, ' loading: ', loading)
+    // console.log('Props Value: ', props.value, ' loading: ', loading)
     if (props.value != null && !loading) {
       // console.log('State Search commencing...')
       store.setState('search', props.value)
