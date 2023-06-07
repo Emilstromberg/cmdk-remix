@@ -176,7 +176,7 @@ const Command = React.forwardRef<HTMLDivElement, CommandProps>((props, forwarded
   const propsRef = useAsRef(props)
   const { label, children, value, onValueChange, filter, shouldFilter, shouldSort, ...etc } = props
 
-  console.log('AllItems: ', allItems)
+  // console.log('AllItems: ', allItems)
 
   const listId = React.useId()
   const labelId = React.useId()
@@ -204,8 +204,8 @@ const Command = React.forwardRef<HTMLDivElement, CommandProps>((props, forwarded
         return state.current
       },
       setState: (key, value, opts) => {
-        console.log('SetState: ', 'key: ', key, ' value: ', value)
-        console.log('If statement: ', Object.is(state.current[key], value))
+        // console.log('SetState: ', 'key: ', key, ' value: ', value)
+        // console.log('If statement: ', Object.is(state.current[key], value))
         if (Object.is(state.current[key], value)) return
         state.current[key] = value
 
@@ -324,7 +324,7 @@ const Command = React.forwardRef<HTMLDivElement, CommandProps>((props, forwarded
 
   /** Sorts items by score, and groups by highest item score. */
   function sort() {
-    console.log('Inside Sort...')
+    // console.log('Inside Sort...')
     if (
       !ref.current ||
       !state.current.search ||
@@ -333,7 +333,7 @@ const Command = React.forwardRef<HTMLDivElement, CommandProps>((props, forwarded
     ) {
       return
     }
-    console.log('Continuing sorting ...')
+    // console.log('Continuing sorting ...')
 
     const scores = state.current.filtered.items
 
@@ -385,9 +385,9 @@ const Command = React.forwardRef<HTMLDivElement, CommandProps>((props, forwarded
   function selectFirstItem() {
     const item = getValidItems().find((item) => !item.ariaDisabled)
     const value = item?.getAttribute(VALUE_ATTR)
-    console.log(`Selecting First Item:`)
-    console.log('item: ', item)
-    console.log('value: ', value)
+    // console.log(`Selecting First Item:`)
+    // console.log('item: ', item)
+    // console.log('value: ', value)
     store.setState('value', value || undefined)
   }
 
@@ -657,9 +657,10 @@ const CustomItem = React.forwardRef<
       console.log('Current Ref is Selected: ', ref.current)
       // schedule(1, () => ref.current.focus())
       console.log('Current Input Ref: ', props.inputRef.current)
-      const event1 = new Event('mouseenter')
-      const event2 = new Event('mouseleave')
-
+      const event1 = new MouseEvent('mouseenter')
+      const event2 = new MouseEvent('mouseleave')
+      console.log(event1)
+      console.log(event2)
       schedule(0, () => ref.current.dispatchEvent(event1))
       schedule(5, () => ref.current.dispatchEvent(event2))
     }
@@ -921,14 +922,14 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>((props, forwardedRe
   const value = useCmdk((state) => state.value)
   const context = useCommand()
 
-  console.log('Store Snapshot: ', store.snapshot().filtered)
-  console.log('Search: ', search)
-  console.log('Context: ', context)
-  console.log('Props: ', props)
+  // console.log('Store Snapshot: ', store.snapshot().filtered)
+  // console.log('Search: ', search)
+  // console.log('Context: ', context)
+  // console.log('Props: ', props)
 
   const selectedItemId = React.useMemo(() => {
-    // console.log(`Selection (selectedItemId) commencing, commandRef: ${context.commandRef.current} `)
     const item = context.commandRef.current?.querySelector(`${ITEM_SELECTOR}[${VALUE_ATTR}="${value}"]`)
+    // console.log(`Selection (selectedItemId) commencing, commandRef: ${context.commandRef.current} `)
     // console.log('Selected Item: ', item)
     return item?.getAttribute('id')
   }, [value, context.commandRef])
@@ -939,7 +940,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>((props, forwardedRe
   React.useEffect(() => {
     console.log('Props Value: ', props.value, ' loading: ', loading)
     if (props.value != null && !loading) {
-      console.log('State Search commencing...')
+      // console.log('State Search commencing...')
       store.setState('search', props.value)
     }
     //? We listen to the underlying list, if this has been updated async values have been
