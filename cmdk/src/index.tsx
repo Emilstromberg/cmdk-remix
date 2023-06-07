@@ -76,6 +76,12 @@ type CommandProps = Children &
      * If `false`, you must conditionally render valid items based on the search query yourself.
      */
     shouldFilter?: boolean
+
+    /**
+     *  CUSTOM:
+     *  Adding a separate shouldSort conditional, maybe we want to find most relevant but not remove.
+     */
+    shouldSort?: boolean
     /**
      * Custom filter function for whether each command menu item should matches the given search query.
      * It should return a number between 0 and 1, with 1 being the best match and 0 being hidden entirely.
@@ -168,7 +174,7 @@ const Command = React.forwardRef<HTMLDivElement, CommandProps>((props, forwarded
   const ids = useLazyRef<Map<string, string>>(() => new Map()) // id → value
   const listeners = useLazyRef<Set<() => void>>(() => new Set()) // [...rerenders]
   const propsRef = useAsRef(props)
-  const { label, children, value, onValueChange, filter, shouldFilter, ...etc } = props
+  const { label, children, value, onValueChange, filter, shouldFilter, shouldSort, ...etc } = props
 
   console.log('AllItems: ', allItems)
 
@@ -321,7 +327,7 @@ const Command = React.forwardRef<HTMLDivElement, CommandProps>((props, forwarded
       !ref.current ||
       !state.current.search ||
       // Explicitly false, because true | undefined is the default
-      propsRef.current.shouldFilter === false
+      propsRef.current.shouldSort === false
     ) {
       return
     }
@@ -910,7 +916,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>((props, forwardedRe
   const value = useCmdk((state) => state.value)
   const context = useCommand()
 
-  console.log('Store Snapshot: ', store.snapshot())
+  console.log('Store Snapshot: ', store.snapshot().filtered)
   console.log('Search: ', search)
   console.log('Context: ', context)
   console.log('Props: ', props)
@@ -931,7 +937,9 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>((props, forwardedRe
       // console.log('State Search commencing...')
       store.setState('search', props.value)
     }
-  }, [props.value, loading])
+    //? We listen to the underlying list, if this has been updated async values have been
+    //? fetched, ready to update focused value.
+  }, [props.value, context.commandRef])
 
   return (
     <input

@@ -26,6 +26,11 @@ declare const Command: React.ForwardRefExoticComponent<Children & DivProps & {
      */
     shouldFilter?: boolean;
     /**
+     *  CUSTOM:
+     *  Adding a separate shouldSort conditional, maybe we want to find most relevant but not remove.
+     */
+    shouldSort?: boolean;
+    /**
      * Custom filter function for whether each command menu item should matches the given search query.
      * It should return a number between 0 and 1, with 1 being the best match and 0 being hidden entirely.
      * By default, uses the `command-score` library.
@@ -164,6 +169,11 @@ declare const Dialog: React.ForwardRefExoticComponent<RadixDialog.DialogProps & 
      */
     shouldFilter?: boolean;
     /**
+     *  CUSTOM:
+     *  Adding a separate shouldSort conditional, maybe we want to find most relevant but not remove.
+     */
+    shouldSort?: boolean;
+    /**
      * Custom filter function for whether each command menu item should matches the given search query.
      * It should return a number between 0 and 1, with 1 being the best match and 0 being hidden entirely.
      * By default, uses the `command-score` library.
@@ -214,6 +224,11 @@ declare const pkg: React.ForwardRefExoticComponent<Children & DivProps & {
      * If `false`, you must conditionally render valid items based on the search query yourself.
      */
     shouldFilter?: boolean;
+    /**
+     *  CUSTOM:
+     *  Adding a separate shouldSort conditional, maybe we want to find most relevant but not remove.
+     */
+    shouldSort?: boolean;
     /**
      * Custom filter function for whether each command menu item should matches the given search query.
      * It should return a number between 0 and 1, with 1 being the best match and 0 being hidden entirely.
@@ -314,6 +329,11 @@ declare const pkg: React.ForwardRefExoticComponent<Children & DivProps & {
          * If `false`, you must conditionally render valid items based on the search query yourself.
          */
         shouldFilter?: boolean;
+        /**
+         *  CUSTOM:
+         *  Adding a separate shouldSort conditional, maybe we want to find most relevant but not remove.
+         */
+        shouldSort?: boolean;
         /**
          * Custom filter function for whether each command menu item should matches the given search query.
          * It should return a number between 0 and 1, with 1 being the best match and 0 being hidden entirely.
