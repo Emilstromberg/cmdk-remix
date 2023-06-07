@@ -1,7 +1,6 @@
 import * as RadixDialog from '@radix-ui/react-dialog';
 import * as React from 'react';
 import { RemixLinkProps } from '@remix-run/react/dist/components';
-import { PrefetchPageDescriptor } from '@remix-run/react/dist/links';
 
 declare type Children = {
     children?: React.ReactNode;
@@ -76,7 +75,7 @@ declare const CustomItem: React.ForwardRefExoticComponent<Children & Omit<DivPro
     href?: string;
     inputRef: React.RefObject<HTMLInputElement>;
     CustomAnchorTag?: React.ForwardRefExoticComponent<RemixLinkProps & React.RefAttributes<HTMLAnchorElement>>;
-    CustomPrefetchElement: ({ page, ...dataLinkProps }: PrefetchPageDescriptor) => JSX.Element | null;
+    CustomPrefetchElement: Element;
 } & React.RefAttributes<HTMLAnchorElement>>;
 /**
  * Command menu item. Becomes active on pointer enter or through keyboard navigation.
@@ -271,7 +270,7 @@ declare const pkg: React.ForwardRefExoticComponent<Children & DivProps & {
         href?: string;
         inputRef: React.RefObject<HTMLInputElement>;
         CustomAnchorTag?: React.ForwardRefExoticComponent<RemixLinkProps & React.RefAttributes<HTMLAnchorElement>>;
-        CustomPrefetchElement: ({ page, ...dataLinkProps }: PrefetchPageDescriptor) => JSX.Element | null;
+        CustomPrefetchElement: Element;
     } & React.RefAttributes<HTMLAnchorElement>>;
     Item: React.ForwardRefExoticComponent<Children & Omit<DivProps, "disabled" | "onSelect" | "value"> & {
         /** Whether this item is currently disabled. */

@@ -617,7 +617,7 @@ const CustomItem = React.forwardRef<
     href?: string
     inputRef: React.RefObject<HTMLInputElement>
     CustomAnchorTag?: React.ForwardRefExoticComponent<RemixLinkProps & React.RefAttributes<HTMLAnchorElement>>
-    CustomPrefetchElement: ({ page, ...dataLinkProps }: PrefetchPageDescriptor) => JSX.Element | null
+    CustomPrefetchElement: Element
   }
 >((props, forwardedRef) => {
   const id = React.useId()
@@ -648,14 +648,14 @@ const CustomItem = React.forwardRef<
 
   //* We could add a listener, that tells us how long a Element have been selected, and
   //* if more than a set limit (e.g. 300ms), we trigger rendering of preload element.
-  // const [selectedAt, setSelectedAt] = React.useState<number>(null)
-  // const THRESHOLD_SELECTED_INTENT = 300
+  const [selectedAt, setSelectedAt] = React.useState<number>(null)
+  const THRESHOLD_SELECTED_INTENT = 300
 
-  // React.useEffect(() => {
-  //   if (selected) {
-  //     setSelectedAt(Date.now())
-  //   }
-  // }, [selected])
+  React.useEffect(() => {
+    if (selected) {
+      setSelectedAt(Date.now())
+    }
+  }, [selected])
 
   function onSelect() {
     select()
@@ -699,10 +699,7 @@ const CustomItem = React.forwardRef<
         suppressContentEditableWarning={etc.suppressContentEditableWarning}
       >
         {props.children}
-        {selected
-          ? // {selected && selectedAt + THRESHOLD_SELECTED_INTENT < Date.now()
-            CustomPrefetchElement({ page: props.href })
-          : null}
+        {selected && selectedAt + THRESHOLD_SELECTED_INTENT < Date.now() ? <>{CustomPrefetchElement}</> : null}
       </CustomAnchorTag>
     )
   }
