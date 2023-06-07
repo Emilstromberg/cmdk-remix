@@ -1,9 +1,8 @@
 import * as RadixDialog from '@radix-ui/react-dialog'
 import * as React from 'react'
 import { commandScore } from './command-score'
-import { PrefetchPageLinks, RemixLinkProps } from '@remix-run/react/dist/components'
-
-import { Link } from '@remix-run/react'
+import { RemixLinkProps } from '@remix-run/react/dist/components'
+import { PrefetchPageDescriptor } from '@remix-run/react/dist/links'
 
 type Children = { children?: React.ReactNode }
 type DivProps = React.HTMLAttributes<HTMLDivElement>
@@ -618,6 +617,7 @@ const CustomItem = React.forwardRef<
     href?: string
     inputRef: React.RefObject<HTMLInputElement>
     CustomAnchorTag?: React.ForwardRefExoticComponent<RemixLinkProps & React.RefAttributes<HTMLAnchorElement>>
+    CustomPrefetchElement: Element
   }
 >((props, forwardedRef) => {
   const id = React.useId()
@@ -708,7 +708,7 @@ const CustomItem = React.forwardRef<
         suppressContentEditableWarning={etc.suppressContentEditableWarning}
       >
         {props.children}
-        {selected ? <PrefetchPageLinks page={props.href} /> : null}
+        {selected ? <>{props.CustomPrefetchElement}</> : null}
       </props.CustomAnchorTag>
     )
   }
