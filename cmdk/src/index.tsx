@@ -642,7 +642,7 @@ const CustomItem = React.forwardRef<
   React.useEffect(() => {
     if (selected) {
       console.log('Current Ref is Selected: ', ref.current)
-      schedule(1, () => ref.current.focus())
+      // schedule(1, () => ref.current.focus())
       console.log('Current Input Ref: ', props.inputRef.current)
       schedule(0, () => ref.current.dispatchEvent(new Event('mouseenter')))
       schedule(5, () => ref.current.dispatchEvent(new Event('mouseleave')))
