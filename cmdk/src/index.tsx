@@ -939,7 +939,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>((props, forwardedRe
     }
     //? We listen to the underlying list, if this has been updated async values have been
     //? fetched, ready to update focused value.
-  }, [props.value, context.commandRef])
+  }, [props.value, store.snapshot().filtered.items])
 
   return (
     <input
