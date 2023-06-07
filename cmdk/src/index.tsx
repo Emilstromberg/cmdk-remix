@@ -639,7 +639,10 @@ const CustomItem = React.forwardRef<
       console.log('Current Ref is Selected: ', ref.current)
       schedule(1, () => ref.current.focus())
       console.log('Current Input Ref: ', props.inputRef.current)
-      schedule(1, () => props.inputRef.current.focus())
+      schedule(0, () => ref.current.dispatchEvent(new Event('mouseenter')))
+      schedule(5, () => ref.current.dispatchEvent(new Event('mouseleave')))
+
+      // schedule(1, () => props.inputRef.current.focus())
     }
   }, [selected])
 
@@ -891,7 +894,7 @@ const Separator = React.forwardRef<HTMLDivElement, SeparatorProps>((props, forwa
  * Command menu input.
  * All props are forwarded to the underyling `input` element.
  */
-const Input = React.forwardRef<HTMLInputElement, InputProps>((props, forwardedRef) => {
+const Input = React.forwardRef<HTMLInputElement, InputProps & { loading: boolean }>((props, forwardedRef) => {
   const { onValueChange, ...etc } = props
   const isControlled = props.value != null
   const store = useStore()
@@ -911,11 +914,15 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>((props, forwardedRe
     return item?.getAttribute('id')
   }, [value, context.commandRef])
 
+  //? We want this effect to also listen for when children are updated in DOM
+  //? If for example there is a async event handling outside this environment,
+  //? triggered by props.value, but not yet rendered when effect fires.
   React.useEffect(() => {
     if (props.value != null) {
+      console.log('State Search commencing...')
       store.setState('search', props.value)
     }
-  }, [props.value])
+  }, [props.value, props.loading])
 
   return (
     <input

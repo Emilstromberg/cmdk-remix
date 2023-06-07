@@ -140,6 +140,8 @@ declare const Input: React.ForwardRefExoticComponent<Omit<React.InputHTMLAttribu
      * Event handler called when the search value changes.
      */
     onValueChange?: (search: string) => void;
+} & {
+    loading: boolean;
 } & React.RefAttributes<HTMLInputElement>>;
 /**
  * Contains `Item`, `Group`, and `Separator`.
@@ -273,6 +275,8 @@ declare const pkg: React.ForwardRefExoticComponent<Children & DivProps & {
          * Event handler called when the search value changes.
          */
         onValueChange?: (search: string) => void;
+    } & {
+        loading: boolean;
     } & React.RefAttributes<HTMLInputElement>>;
     CustomGroup: React.ForwardRefExoticComponent<Children & Omit<DivProps, "value" | "heading"> & {
         /** Optional heading to render for this group. */
