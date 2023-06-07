@@ -900,7 +900,7 @@ const Separator = React.forwardRef<HTMLDivElement, SeparatorProps>((props, forwa
  * All props are forwarded to the underyling `input` element.
  */
 const Input = React.forwardRef<HTMLInputElement, InputProps>((props, forwardedRef) => {
-  const { onValueChange, ...etc } = props
+  const { onValueChange, loading, ...etc } = props
   const isControlled = props.value != null
   const store = useStore()
   const search = useCmdk((state) => state.search)
@@ -923,11 +923,12 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>((props, forwardedRe
   //? If for example there is a async event handling outside this environment,
   //? triggered by props.value, but not yet rendered when effect fires.
   React.useEffect(() => {
+    console.log('Props Value: ', props.value, ' loading: ', loading)
     if (props.value != null) {
       console.log('State Search commencing...')
       store.setState('search', props.value)
     }
-  }, [props.value, props.loading])
+  }, [props.value, loading])
 
   return (
     <input
