@@ -204,7 +204,8 @@ const Command = React.forwardRef<HTMLDivElement, CommandProps>((props, forwarded
         return state.current
       },
       setState: (key, value, opts) => {
-        // console.log(`State Update, key: ${key}, value: ${value}, if statement: ${Object.is(state.current[key], value)}`)
+        console.log('SetState: ', 'key: ', key, ' value: ', value)
+        console.log('If statement: ', Object.is(state.current[key], value))
         if (Object.is(state.current[key], value)) return
         state.current[key] = value
 
@@ -323,6 +324,7 @@ const Command = React.forwardRef<HTMLDivElement, CommandProps>((props, forwarded
 
   /** Sorts items by score, and groups by highest item score. */
   function sort() {
+    console.log('Inside Sort...')
     if (
       !ref.current ||
       !state.current.search ||
@@ -331,6 +333,7 @@ const Command = React.forwardRef<HTMLDivElement, CommandProps>((props, forwarded
     ) {
       return
     }
+    console.log('Continuing sorting ...')
 
     const scores = state.current.filtered.items
 
@@ -382,7 +385,9 @@ const Command = React.forwardRef<HTMLDivElement, CommandProps>((props, forwarded
   function selectFirstItem() {
     const item = getValidItems().find((item) => !item.ariaDisabled)
     const value = item?.getAttribute(VALUE_ATTR)
-    console.log(`Selecting First Item: ${item}, value: ${value}`)
+    console.log(`Selecting First Item:`)
+    console.log('item: ', item)
+    console.log('value: ', value)
     store.setState('value', value || undefined)
   }
 
@@ -933,7 +938,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>((props, forwardedRe
   //? triggered by props.value, but not yet rendered when effect fires.
   React.useEffect(() => {
     console.log('Props Value: ', props.value, ' loading: ', loading)
-    if (props.value != null) {
+    if (props.value != null && !loading) {
       console.log('State Search commencing...')
       store.setState('search', props.value)
     }
