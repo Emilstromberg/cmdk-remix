@@ -77,7 +77,7 @@ type CommandProps = Children &
     shouldFilter?: boolean
 
     /**
-     *  CUSTOM: Adding a separate shouldSort conditional, maybe we 
+     *  CUSTOM: Adding a separate shouldSort conditional, maybe we
      *  want to find most relevant but not remove.
      */
     shouldSort?: boolean
@@ -675,6 +675,10 @@ const CustomItem = React.forwardRef<
   if (!render) return null
 
   const { disabled, value: _, onSelect: __, CustomAnchorTag, CustomPrefetchElement, ...etc } = props
+
+  console.log('Selected: ', selected)
+  console.log('Selected At: ', selectedAt)
+  console.log('Statement: ', selectedAt + THRESHOLD_SELECTED_INTENT < Date.now())
 
   if (props.CustomAnchorTag) {
     return (

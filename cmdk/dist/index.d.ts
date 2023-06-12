@@ -27,8 +27,8 @@ declare const Command: React.ForwardRefExoticComponent<Children & DivProps & {
      */
     shouldFilter?: boolean;
     /**
-     *  CUSTOM:
-     *  Adding a separate shouldSort conditional, maybe we want to find most relevant but not remove.
+     *  CUSTOM: Adding a separate shouldSort conditional, maybe we
+     *  want to find most relevant but not remove.
      */
     shouldSort?: boolean;
     /**
@@ -148,7 +148,7 @@ declare const Input: React.ForwardRefExoticComponent<Omit<React.InputHTMLAttribu
      */
     onValueChange?: (search: string) => void;
     /**
-     * Custom prop, notifying our effects if there was an outside event.
+     * CUSTOM: letting us know the state of an outside async fetch event.
      */
     loading: boolean;
 } & React.RefAttributes<HTMLInputElement>>;
@@ -171,8 +171,8 @@ declare const Dialog: React.ForwardRefExoticComponent<RadixDialog.DialogProps & 
      */
     shouldFilter?: boolean;
     /**
-     *  CUSTOM:
-     *  Adding a separate shouldSort conditional, maybe we want to find most relevant but not remove.
+     *  CUSTOM: Adding a separate shouldSort conditional, maybe we
+     *  want to find most relevant but not remove.
      */
     shouldSort?: boolean;
     /**
@@ -227,8 +227,8 @@ declare const pkg: React.ForwardRefExoticComponent<Children & DivProps & {
      */
     shouldFilter?: boolean;
     /**
-     *  CUSTOM:
-     *  Adding a separate shouldSort conditional, maybe we want to find most relevant but not remove.
+     *  CUSTOM: Adding a separate shouldSort conditional, maybe we
+     *  want to find most relevant but not remove.
      */
     shouldSort?: boolean;
     /**
@@ -296,7 +296,7 @@ declare const pkg: React.ForwardRefExoticComponent<Children & DivProps & {
          */
         onValueChange?: (search: string) => void;
         /**
-         * Custom prop, notifying our effects if there was an outside event.
+         * CUSTOM: letting us know the state of an outside async fetch event.
          */
         loading: boolean;
     } & React.RefAttributes<HTMLInputElement>>;
@@ -333,8 +333,8 @@ declare const pkg: React.ForwardRefExoticComponent<Children & DivProps & {
          */
         shouldFilter?: boolean;
         /**
-         *  CUSTOM:
-         *  Adding a separate shouldSort conditional, maybe we want to find most relevant but not remove.
+         *  CUSTOM: Adding a separate shouldSort conditional, maybe we
+         *  want to find most relevant but not remove.
          */
         shouldSort?: boolean;
         /**
