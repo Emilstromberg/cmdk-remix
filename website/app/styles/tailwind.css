@@ -1,0 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* .ProseMirror-focused {
+    @apply outline-none;
+} */

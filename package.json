@@ -5,7 +5,7 @@
   "scripts": {
     "build": "pnpm -F cmdk build",
     "dev": "pnpm -F cmdk build --watch",
-    "website": "pnpm -F cmdk-website dev",
+    "website": "pnpm -F cmdk-remix dev",
     "testsite": "pnpm -F cmdk-tests dev",
     "format": "prettier '**/*.{js,jsx,ts,tsx,json,md,mdx,css,scss,yaml,yml}' --write",
     "preinstall": "npx only-allow pnpm",
@@ -18,8 +18,5 @@
     "tsup": "6.2.1",
     "typescript": "4.6.4"
   },
-  "packageManager": "pnpm@7.9.0",
-  "dependencies": {
-    "@remix-run/react": "^1.16.1"
-  }
+  "packageManager": "pnpm@7.9.0"
 }

@@ -1,0 +1,59 @@
+/* To hide number increment/decrement from number input field */
+
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type='number'] {
+  -moz-appearance: textfield;
+  -webkit-appearance: textfield;
+  appearance: textfield;
+}
+
+.dark-theme {
+  /* Background color: bg-gray-700 */
+  --tw-bg-opacity: 1;
+  background-color: rgb(54 57 63 / var(--tw-bg-opacity));
+
+  /* Border color: border-gray-500 */
+  --tw-border-opacity: 1;
+  border-color: rgb(79 84 92 / var(--tw-border-opacity));
+
+  /* Text color: text-gray-500 */
+  --tw-text-opacity: 1;
+  color: rgb(107 114 128 / var(--tw-text-opacity));
+}
+
+.light-theme {
+  /* Background color: bg-gray-300 */
+  --tw-bg-opacity: 1;
+  background-color: rgb(227 229 232 / var(--tw-bg-opacity));
+  background: bg-gray-300;
+
+  /* Border color: border-gray-500 */
+  --tw-border-opacity: 1;
+  border-color: rgb(107 114 128 / var(--tw-border-opacity));
+
+  /* Text color: text-gray-500 */
+  --tw-text-opacity: 1;
+  color: rgb(107 114 128 / var(--tw-text-opacity));
+}
+
+.pink {
+  /* Border color: border-pink-400 */
+  --tw-border-opacity: 1;
+  border-color: rgb(244 114 182 / var(--tw-border-opacity));
+
+  /* Text color: text-pink-400 */
+  --tw-text-opacity: 1;
+  color: rgb(244 114 182 / var(--tw-text-opacity));
+
+  /* Transition: transition-all */
+  transition-property: all;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
+}
