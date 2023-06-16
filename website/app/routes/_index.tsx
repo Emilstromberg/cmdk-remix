@@ -147,12 +147,12 @@ export function Command() {
                   .map((ele, idx) => (
                     <CustomCommandItem
                       key={idx}
-                      href={`/main/instrument/${ele.symbol}`}
+                      href={`/prefetch/${ele.symbol}`}
                       value={ele.symbol}
                       inputRef={inputRef}
                       className="table-row w-full"
                       CustomAnchorTag={Link}
-                      CustomPrefetchElement={<PrefetchPageLinks page={`/main/instrument/${ele.symbol}`} />}
+                      CustomPrefetchElement={<PrefetchPageLinks page={`/prefetch/${ele.symbol}`} />}
                     >
                       <span className="table-cell rounded-bl-sm rounded-tl-sm px-2 py-3 text-center align-middle text-sm">
                         <BarChart2 className="h-4 w-4" />

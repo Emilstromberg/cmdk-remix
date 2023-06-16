@@ -651,9 +651,24 @@ const CustomItem = React.forwardRef<
   const [selectedAt, setSelectedAt] = React.useState<number>(null)
   const THRESHOLD_SELECTED_INTENT = 300
 
+  const timeoutRef = React.useRef(null)
+  const [renderPrefetch, setRenderPrefetch] = React.useState(false)
+
   React.useEffect(() => {
     if (selected) {
       setSelectedAt(Date.now())
+
+      // Clear previous timeout, if any
+      clearTimeout(timeoutRef.current)
+
+      timeoutRef.current = setTimeout(() => {
+        // Perform the desired action after the specified duration
+        console.log(`Selected option "${value}" for ${THRESHOLD_SELECTED_INTENT} milliseconds.`)
+        // Trigger something else here
+        if (selected) setRenderPrefetch(true) // is this up to date?
+      }, THRESHOLD_SELECTED_INTENT)
+    } else {
+      setRenderPrefetch(false)
     }
   }, [selected])
 
@@ -676,9 +691,11 @@ const CustomItem = React.forwardRef<
 
   const { disabled, value: _, onSelect: __, CustomAnchorTag, CustomPrefetchElement, ...etc } = props
 
-  console.log('Selected: ', selected)
-  console.log('Selected At: ', selectedAt)
-  console.log('Statement: ', selectedAt + THRESHOLD_SELECTED_INTENT < Date.now())
+  React.useEffect(() => {
+    console.log('Selected: ', selected)
+    console.log('Selected At: ', selectedAt)
+    console.log('Statement: ', selected && selectedAt + THRESHOLD_SELECTED_INTENT < Date.now())
+  }, [])
 
   if (props.CustomAnchorTag) {
     return (
@@ -703,7 +720,7 @@ const CustomItem = React.forwardRef<
         suppressContentEditableWarning={etc.suppressContentEditableWarning}
       >
         {props.children}
-        {selected && selectedAt + THRESHOLD_SELECTED_INTENT < Date.now() ? <>{CustomPrefetchElement}</> : null}
+        {renderPrefetch ? <>{CustomPrefetchElement}</> : null}
       </CustomAnchorTag>
     )
   }
