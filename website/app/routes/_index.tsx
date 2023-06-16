@@ -72,15 +72,6 @@ export function Command() {
     return () => document.removeEventListener('keydown', down)
   }, [open, navigate])
 
-  // TODO: Need to hook up search to yahoo/search-addition/${ticker}
-  // useEffect(() => {
-  // 	if (fetcher.state === 'idle' && searchValue.length > 0) {
-  // 		fetcher.load(`/api/yahoo/search-addition/${searchValue}`)
-  // 	}
-
-  // 	console.log(fetcher.data)
-  // }, [searchValue])
-
   // TODO: Need to keep a history of what this user has previously searched for and visited.
   // TODO: Or what is the most popular searches on the website.
 

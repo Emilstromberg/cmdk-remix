@@ -663,7 +663,7 @@ const CustomItem = React.forwardRef<
 
       timeoutRef.current = setTimeout(() => {
         // Perform the desired action after the specified duration
-        console.log(`Selected option "${value}" for ${THRESHOLD_SELECTED_INTENT} milliseconds.`)
+        // console.log(`Selected option "${value}" for ${THRESHOLD_SELECTED_INTENT} milliseconds.`)
         // Trigger something else here
         if (selected) setRenderPrefetch(true) // is this up to date?
       }, THRESHOLD_SELECTED_INTENT)
@@ -690,12 +690,6 @@ const CustomItem = React.forwardRef<
   if (!render) return null
 
   const { disabled, value: _, onSelect: __, CustomAnchorTag, CustomPrefetchElement, ...etc } = props
-
-  React.useEffect(() => {
-    console.log('Selected: ', selected)
-    console.log('Selected At: ', selectedAt)
-    console.log('Statement: ', selected && selectedAt + THRESHOLD_SELECTED_INTENT < Date.now())
-  }, [])
 
   if (props.CustomAnchorTag) {
     return (
