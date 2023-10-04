@@ -7,10 +7,11 @@ import { PrefetchPageDescriptor } from '@remix-run/react/dist/links'
 type Children = { children?: React.ReactNode }
 type DivProps = React.HTMLAttributes<HTMLDivElement>
 
-type LoadingProps = Children & {
-  /** Estimated progress of loading asynchronous options. */
-  progress?: number
-}
+type LoadingProps = Children &
+  DivProps & {
+    /** Estimated progress of loading asynchronous options. */
+    progress?: number
+  }
 type EmptyProps = Children & DivProps & {}
 type SeparatorProps = DivProps & {
   /** Whether this separator should always be rendered. Useful if you disable automatic filtering. */
