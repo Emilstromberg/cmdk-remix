@@ -577,12 +577,16 @@ const Command = React.forwardRef<HTMLDivElement, CommandProps>((props, forwarded
             case 'Enter': {
               // console.log('In the enter...')
               // console.log('Current Event: ', e)
-              // Trigger item onSelect
-              e.preventDefault()
-              const item = getSelectedItem()
-              if (item) {
-                const event = new Event(SELECT_EVENT)
-                item.dispatchEvent(event)
+              // Check if IME composition is finished before triggering onSelect
+              // This prevents unwanted triggering while user is still inputting text with IME
+              if (!e.nativeEvent.isComposing) {
+                // Trigger item onSelect
+                e.preventDefault()
+                const item = getSelectedItem()
+                if (item) {
+                  const event = new Event(SELECT_EVENT)
+                  item.dispatchEvent(event)
+                }
               }
             }
           }
